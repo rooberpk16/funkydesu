@@ -46,7 +46,6 @@ const jobToRole = {
 
 if(!authStore.user || authStore.profile?.tier == null || authStore.profile?.tier === 3){
     router.push('/rejected');
-    return;
 }
 
 const joinRaid = async(raid) => {
