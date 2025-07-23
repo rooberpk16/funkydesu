@@ -193,15 +193,15 @@ onMounted( async() => {
     <div class="container">
         <div class="raids">
             <div class="raid" v-for="raid in raids" :key="raid.id">
-                <p>{{ raid.raid_name }} """" Date: {{ dateLocal[raid.id] }}</p>
-                <p>Created by: {{ raid.owner_ign }}</p>
-                <p>Players: {{ participantsCount[raid.id] ?? 0 }}/{{ raid.config.players }}</p>
-                <p v-if="raid.config.free===false && participantsCountRoles[raid.id]">
+                <p class="raid_title">{{ raid.raid_name }} """" Date: {{ dateLocal[raid.id] }}</p>
+                <p class="raid_creator">Created by: {{ raid.owner_ign }}</p>
+                <p class="raid_players">Players: {{ participantsCount[raid.id] ?? 0 }}/{{ raid.config.players }}</p>
+                <p class="raid_players" v-if="raid.config.free===false && participantsCountRoles[raid.id]">
                     Tanks: {{ participantsCountRoles[raid.id]?.tanks }}/{{ raid.config.tanks }}
                     Healers: {{ participantsCountRoles[raid.id]?.healers }}/{{ raid.config.healers }}
                     DPS: {{ participantsCountRoles[raid.id]?.dps }}/{{ raid.config.dps }}
                 </p>
-                
+                <button @click="router.push('/raids/'+raid.id)">Check details</button>
                 
             </div>
         </div>
@@ -217,5 +217,35 @@ onMounted( async() => {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+.raid {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #444444;
+    color:white;
+}
+.raid_title {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+.raid_creator {
+    font-size: 0.9em;
+    color: #aaa;
+}
+.raid_players {
+    font-size: 0.9em;
+    color: #bbb;
+}
+button {
+    background-color: #bc35c9;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #a11ead;
 }
 </style>
