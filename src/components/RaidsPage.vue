@@ -4,6 +4,9 @@ import { useAuthStore } from '../stores/auth.js';
 import { ref, onMounted, onUnmounted } from 'vue';
 import NavBar from './NavBar.vue';
 
+
+
+
 const authStore = useAuthStore();
 
 const raids = ref([]);
@@ -39,6 +42,9 @@ const jobToRole = {
     "Summoner": "dps",
 };
 
+if(!authStore.user || authStore.profile?.tier == null || authStore.profile?.tier === 3){
+    router.push('/rejected');
+}
 
 const joinRaid = async(raid) => {
     const selectedJob = Variable; //Check later when template is done;
