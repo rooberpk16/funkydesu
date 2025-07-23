@@ -3,11 +3,13 @@ import { supabase } from '../supabase.js';
 import { useAuthStore } from '../stores/auth.js';
 import { ref, onMounted, onUnmounted } from 'vue';
 import NavBar from './NavBar.vue';
+import { useRouter } from 'vue-router';
 
 
 
 
 const authStore = useAuthStore();
+const router = useRouter();
 
 const raids = ref([]);
 const participantsCount = ref({});
@@ -44,6 +46,7 @@ const jobToRole = {
 
 if(!authStore.user || authStore.profile?.tier == null || authStore.profile?.tier === 3){
     router.push('/rejected');
+    return;
 }
 
 const joinRaid = async(raid) => {
