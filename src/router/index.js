@@ -6,6 +6,7 @@ import RegisterView from '@/views/RegisterView.vue';
 import AdminPanel from '@/components/AdminPanel.vue';
 import NoPermission from '@/components/NoPermission.vue';
 import CreatePage from '@/components/CreatePage.vue';
+import RaidsPage from '@/components/RaidsPage.vue';
 import { useAuthStore } from '../stores/auth.js';
 
 const requireAdmin = (to, from, next) => {
@@ -42,6 +43,12 @@ const router = createRouter({
       path: '/create',
       name: 'create',
       component: CreatePage,
+      meta: { requiresNoAuth: false },
+    },
+    {
+      path: '/raids',
+      name: 'raids',
+      component: RaidsPage,
       meta: { requiresNoAuth: false },
     },
     {
