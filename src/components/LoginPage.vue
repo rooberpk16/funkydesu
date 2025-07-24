@@ -14,6 +14,32 @@ const password = ref('');
 const loading = ref(false);
 const errorMsg = ref('');
 
+const forgotEmail = ref('');
+const forgotLoading = ref(false);
+const forgotMessage = ref('');
+const forgotError = ref('');
+
+const handleForgotPassword = async() => {
+    forgotLoading.value = true;
+    forgotMessage.value = '';
+    forgotError.value = '';
+
+    try {
+        const { error } = await supabase.auth.resetPasswordForEmail(forgotEmail.value, {
+            redirectTo: 'https://funkydesu.vercel.app/reset-password',
+        });
+        if (error) {
+            forgotError.value = error.message;
+        } else {
+            forgotMessage.value = 'Password reset email sent. Check your inbox.';
+        }
+    } catch (err){
+        forgotError.value = err.message;
+    } finally {
+        forgotLoading.value = false;
+    }
+}
+
 
 const handleLoginDiscord = async() => {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -51,13 +77,26 @@ const handleLogin = async() => {
                 {{  loading ? 'Logging in... ' : 'Login' }}
             </button>
         </form>
+        <p>You can log-in with discord too:</p>
+        <button @click="handleLoginDiscord">Login with discord</button>
+        <p>If you forgot your password, enter your email below to receive a reset link:</p>
+        <form @submit.prevent="handleForgotPassword">
+            <input type="email" placeholder="Email" v-model="forgotEmail" required />
+            <button type="submit" :disabled="forgotLoading">
+                {{ forgotLoading ? 'Sending...' : 'Send Reset Link' }}
+            </button>
+        </form>
+        <p v-if="forgotMessage" style="color: green;">
+            {{ forgotMessage }}
+        </p>
+        <p v-if="forgotError" style="color: red;">
+            {{ forgotError }}
+        </p>
 
         <p v-if="errorMsg" style="color: red;">
             {{ errorMsg }}
         </p>
 
-        <p>You can log-in with discord too:</p>
-        <button @click="handleLoginDiscord">Login with discord</button>
     </div>
 </template>
 
@@ -87,6 +126,7 @@ const handleLogin = async() => {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 .login-page button:hover {
     background-color: #a11ead;
