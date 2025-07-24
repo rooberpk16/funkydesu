@@ -18,18 +18,21 @@ const handleLogout = async() => {
     <!--Nav bar for the whole website. Must include a 
     Home button, Join button, a Login button, a Create button and a Raids button-->
     <nav class="navbar">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/join">Join</a></li>
-            <li><a href="/create">Create</a></li>
-            <li><a href="/raids">Raids</a></li>
-            <li></li>
-            <li v-if="!user"><a href="/login">Login</a></li>
-            <li v-else><button @click="handleLogout">Logout</button></li>
-            <li v-if="auth.profile?.tier === 0 || auth.profile?.tier === 1">
-                <a href="/admin">Admin panel</a>
-            </li>
-        </ul>
+        <div class="navbar-div">
+
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/join">Join</a></li>
+                <li><a href="/create">Create</a></li>
+                <li><a href="/raids">Raids</a></li>
+                <li></li>
+                <li v-if="!user"><a href="/login">Login</a></li>
+                <li v-else><button @click="handleLogout">Logout</button></li>
+                <li v-if="auth.profile?.tier === 0 || auth.profile?.tier === 1">
+                    <a href="/admin">Admin panel</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </template>
 
@@ -37,6 +40,12 @@ const handleLogout = async() => {
 .navbar {
     background-color: #333;
     overflow: hidden;
+}
+.navbar-div{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content: center;
 }
 ul {
     list-style-type: none;

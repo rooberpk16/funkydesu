@@ -8,6 +8,7 @@ import NoPermission from '@/components/NoPermission.vue';
 import CreatePage from '@/components/CreatePage.vue';
 import RaidsPage from '@/components/RaidsPage.vue';
 import ResetPassword from '@/components/ResetPassword.vue';
+import RaidDetails from '@/components/RaidDetails.vue';
 import { useAuthStore } from '../stores/auth.js';
 
 const requireAdmin = (to, from, next) => {
@@ -81,6 +82,12 @@ const router = createRouter({
       name: 'resetPassword',
       component:ResetPassword,
     },
+    {
+      path: '/raids/:id',
+      name: 'raidsDetail',
+      component: RaidDetails,
+      props: true,
+    }
   ],
 });
 

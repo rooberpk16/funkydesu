@@ -16,6 +16,8 @@ const participantsCount = ref({});
 const participantsCountRoles = ref({});
 const dateLocal = ref({});
 
+let channel = null;
+
 const jobToRole = {
     "Warrior": "tank",
     "Paladin": "tank",
@@ -146,7 +148,7 @@ onMounted( async() => {
     }
 
     //channel to listen for updates on raids
-    const channel = supabase
+    channel = supabase
         .channel('profileraids changes')
         .on('postgres_changes', {event: '*', schema: 'public', table: 'profileraids'}, async (payload) => {
             const raidId = payload.new ? payload.new.raid_id : payload.old.raid_id;
@@ -182,9 +184,9 @@ onMounted( async() => {
         })
         .subscribe();
 
-        onUnmounted(() => {
-            supabase.removeChannel(channel);
-        });
+    });
+onUnmounted(() => {
+    supabase.removeChannel(channel);
 });
 </script>
 
